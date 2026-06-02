@@ -954,7 +954,7 @@ function renderSessionLog() {
     if (entry.result === 'mastered') {
       addBackBtn = '<button onclick="addBackToDeck(' + i + ')" style="display:block;margin-top:4px;padding:2px 8px;font-size:.6rem;border-radius:8px;border:1px solid rgba(90,122,94,.35);background:transparent;color:var(--sage);cursor:pointer;font-family:sans-serif">&#8629; Add back</button>';
     }
-    var audioBtn = '<button onclick="speak(' + JSON.stringify(entry.fr) + ',\'fr-FR\')" style="background:none;border:1px solid rgba(26,18,8,.15);border-radius:50%;width:22px;height:22px;cursor:pointer;font-size:10px;padding:0;margin-left:4px;vertical-align:middle;flex-shrink:0" title="Pronounce">🔊</button>';
+    var audioBtn = '<button data-fr="' + escapeHTML(entry.fr) + '" onclick="speakEl(this)" style="background:none;border:1px solid rgba(26,18,8,.15);border-radius:50%;width:22px;height:22px;cursor:pointer;font-size:10px;padding:0;margin-left:4px;vertical-align:middle;flex-shrink:0" title="Pronounce">🔊</button>';
     return '<div class="log-row ' + cls + '"><div style="display:flex;align-items:center;gap:4px">' + escapeHTML(entry.fr) + audioBtn + '</div><div>' + escapeHTML(entry.en) + '</div><div>' + literalHtml + '</div><div>' + badge + addBackBtn + '</div></div>';
   }).join('');
 }
@@ -1003,6 +1003,11 @@ function speak(text, lang) {
   const native = voices.find(v => v.lang.startsWith(lang.split('-')[0]) && !v.name.includes('('));
   if (native) utt.voice = native;
   window.speechSynthesis.speak(utt);
+}
+
+function speakEl(el) {
+  var fr = el.getAttribute('data-fr');
+  if (fr) speak(fr, 'fr-FR');
 }
 
 function speakFront(e) {
@@ -1158,7 +1163,7 @@ function renderWordList() {
       : '<span style="color:rgba(26,18,8,.2)">&#8212;</span>';
     var catColor = catColors[c.cat] || '#8a7560';
     var customBadge = c.custom ? ' &#9733;' : '';
-    var wlAudioBtn = '<button onclick="event.stopPropagation();speak(' + JSON.stringify(c.fr) + ',\'fr-FR\')" style="background:none;border:1px solid rgba(26,18,8,.15);border-radius:50%;width:22px;height:22px;cursor:pointer;font-size:10px;padding:0;margin-left:5px;vertical-align:middle;flex-shrink:0" title="Pronounce">🔊</button>';
+    var wlAudioBtn = '<button data-fr="' + escapeHTML(c.fr) + '" onclick="speakEl(this)" style="background:none;border:1px solid rgba(26,18,8,.15);border-radius:50%;width:22px;height:22px;cursor:pointer;font-size:10px;padding:0;margin-left:5px;vertical-align:middle;flex-shrink:0" title="Pronounce">🔊</button>';
     rows += '<div style="padding:9px 14px;font-size:.82rem;' + bg + ';' + border + ';display:flex;align-items:center;gap:4px">' + escapeHTML(c.fr) + customBadge + wlAudioBtn + '</div>';
     rows += '<div style="padding:9px 14px;font-size:.82rem;' + bg + ';' + border + '">' + escapeHTML(c.en) + '</div>';
     rows += '<div style="padding:9px 14px;font-size:.82rem;' + bg + ';' + border + '">' + literalText + '</div>';
