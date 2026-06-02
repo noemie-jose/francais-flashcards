@@ -254,22 +254,12 @@ header p{margin-top:6px;font-size:.85rem;font-weight:300;color:#6b5d4a;letter-sp
     <span style="font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#6b5d4a">Global Progress</span>
     <span style="font-size:.65rem;color:#8a7560"><span id="globalMasteredLabel">0</span> / <span id="globalTotalLabel">0</span> mastered · <span id="globalRemainingLabel">0</span> remaining</span>
   </div>
-  <div class="progress-track" style="margin-bottom:10px"><div class="progress-fill" id="globalProgressFill" style="background:linear-gradient(90deg,var(--sage),var(--gold))"></div></div>
-  <div style="margin-bottom:16px;margin-top:2px">
+  <div class="progress-track" style="margin-bottom:6px"><div class="progress-fill" id="globalProgressFill" style="background:linear-gradient(90deg,var(--sage),var(--gold))"></div></div>
+  <div style="margin-bottom:6px;margin-top:2px">
     <span class="cat-badge" id="activeCatBadge" style="font-size:.68rem;padding:4px 11px"></span>
   </div>
 
-  <div class="key-hints">
-    <span class="key-hint"><span class="key">Space</span> flip</span>
-    <span class="key-hint"><span class="key">1</span> mastered</span>
-    <span class="key-hint"><span class="key">2</span> keep in</span>
-    <span class="key-hint"><span class="key">3</span> missed</span>
-    <span class="key-hint"><span class="key">P</span> pronounce</span>
-    <span class="key-hint"><span class="key">Q</span> quit</span>
-    <span class="key-hint"><span class="key">S</span> skip</span>
-  </div>
-
-  <div style="display:flex;justify-content:flex-end;margin-bottom:6px">
+  <div style="display:flex;justify-content:flex-end;margin-bottom:4px">
     <button onclick="skipCard()" style="padding:5px 14px;border-radius:20px;border:1.5px solid rgba(26,18,8,.15);background:var(--card-bg);font-family:'DM Sans',sans-serif;font-size:.72rem;font-weight:500;color:#6b5d4a;cursor:pointer;transition:all .2s;letter-spacing:.03em" onmouseover="this.style.borderColor='var(--rust)';this.style.color='var(--rust)'" onmouseout="this.style.borderColor='rgba(26,18,8,.15)';this.style.color='#6b5d4a'">Skip → <span style="opacity:.5;font-size:.65rem">S</span></button>
   </div>
   <div class="card-scene">
@@ -313,6 +303,15 @@ header p{margin-top:6px;font-size:.85rem;font-weight:300;color:#6b5d4a;letter-sp
     <span>📋 Session Log <span id="logCount" style="font-weight:400;color:#8a7560">(0 answered)</span></span>
     <span id="logArrow" style="font-size:.8rem">▼</span>
   </button>
+  <div class="key-hints" style="margin-top:10px;margin-bottom:0">
+    <span class="key-hint"><span class="key">Space</span> flip</span>
+    <span class="key-hint"><span class="key">1</span> mastered</span>
+    <span class="key-hint"><span class="key">2</span> keep in</span>
+    <span class="key-hint"><span class="key">3</span> missed</span>
+    <span class="key-hint"><span class="key">P</span> pronounce</span>
+    <span class="key-hint"><span class="key">S</span> skip</span>
+    <span class="key-hint"><span class="key">Q</span> quit</span>
+  </div>
   <div class="log-panel" id="logPanel">
     <div class="log-header" style="grid-template-columns:1fr 1fr 1fr auto"><div>French</div><div>English</div><div>Literal</div><div>Result</div></div>
     <div id="logRows"></div>
@@ -508,7 +507,7 @@ function buildUserPicker() {
     card.onclick = () => selectUser(u.id);
     const masteredCount = (st.masteredKeys || []).length;
     const statsStr = st.totalSessions > 0
-      ? masteredCount + ' mastered · ' + st.totalSessions + ' sessions · best streak ' + (st.maxStreak || st.bestStreak || 0)
+      ? masteredCount + ' mastered · Best Streak ' + (st.maxStreak || st.bestStreak || 0)
       : 'No sessions yet — tap to start!';
     const bg = u.solidBg ? u.color : u.color + '33';
     card.innerHTML = `<div class="user-avatar" style="background:${bg};font-size:1.4rem">${u.emoji}</div>` + `
